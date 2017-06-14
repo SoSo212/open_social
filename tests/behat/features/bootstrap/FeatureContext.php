@@ -725,4 +725,14 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
       // Now click the element.
       $element->click();
     }
+
+    /**
+     * @Then I should see :value in the field :selector
+     */
+    public function iShouldSeeInTheField($value, $selector)
+    {
+      if (!$this->getSession()->evaluateScript('(jQuery(#' . $selector . ')[0].value.indexOf(' . $value . ') != -1)')) {
+        throw new \Exception(sprintf('The value "%s" was not found in element "%s".', $value, $selector));
+      }
+    }
 }
